@@ -19,7 +19,7 @@ jQuery ->
       $child.replaceWith($("<script id='#{$child.attr('id')}' type='text/html' />").html($child.html()))
 
     $template.before( $parsed_template )
-    $link.trigger('nested_fields_added')
+    $(document).trigger('nested_fields_added')
     false
 
 
