@@ -33,15 +33,15 @@ module ActionView::Helpers
       if block_given?
         association = args.first
         options = args.second || {}
-        html_options = args.third
-        @template.link_to(capture(&block), options, html_options, data: { association_path: association_path(association.to_s) })
+        html_options = args.third.merge!(data: { association_path: association_path(association.to_s) })
+        @template.link_to(capture(&block), options, html_options)
       else
         association = args[0]
         name = args[1]
         options = args[2] || {}
-        html_options = args[3]
+        html_options = args[3].merge!(data: { association_path: association_path(association.to_s) })
 
-        @template.link_to(name, options, html_options, data: { association_path: association_path(association.to_s) })
+        @template.link_to(name, options, html_options)
       end
     end
 
