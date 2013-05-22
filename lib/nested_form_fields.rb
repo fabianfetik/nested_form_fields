@@ -23,10 +23,26 @@ module ActionView::Helpers
     end
 
 
-    def add_nested_fields_link association, text = nil
-      @template.link_to text || "Add #{association.to_s.singularize.humanize}", '',
-                        class: "add_nested_fields_link",
-                        data: { association_path: association_path(association.to_s) }
+    # def add_nested_fields_link association, text = nil
+    #   @template.link_to text || "Add #{association.to_s.singularize.humanize}", '',
+    #                     class: "add_nested_fields_link",
+    #                     data: { association_path: association_path(association.to_s) }
+    # end
+
+    def add_nested_fields_link *args, &block
+      if block_given?
+        association = args.first
+        options = args.second || {}
+        html_options = args.third
+        @template.link_to(capture(&block), options, html_options, data: { association_path: association_path(association.to_s))
+      else
+        association = args[0]
+        name = args[1]
+        options = args[2] || {}
+        html_options = args[3]
+
+        @template.link_to(name, options, html_options, data: { association_path: association_path(association.to_s))
+      end
     end
 
     def remove_nested_fields_link text = nil
